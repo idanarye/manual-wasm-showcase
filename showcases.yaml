@@ -7,3 +7,5 @@ tnua-pushover:
   features:
     - bevy/webgl2
     - avian3d
+  url-params:
+    level: Pushover
