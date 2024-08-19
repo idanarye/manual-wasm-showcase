@@ -5,4 +5,5 @@ tnua-pushover:
 
   bin: platformer_3d
   features:
+    - bevy/webgl2
     - avian3d
