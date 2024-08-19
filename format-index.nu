@@ -15,7 +15,7 @@ for showcase in ($showcases | transpose name config) {
         $path = ([$path $params] | str join '?')
     }
 
-    print $'<a href="showcases/($path)">'
+    print $'<a href="($path)">'
     print $showcase.name
     print '</a>'
     print '</li>'
