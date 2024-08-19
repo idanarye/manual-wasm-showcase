@@ -1,0 +1,11 @@
+tnua-pushover:
+  repository: https://github.com/idanarye/bevy-tnua.git
+  branch: feature/30/boundary-pushing
+  type: rust
+
+  bin: platformer_3d
+  features:
+    - bevy/webgl2
+    - avian3d
+  url-params:
+    level: Pushback
