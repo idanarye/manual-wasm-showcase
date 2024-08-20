@@ -32,6 +32,8 @@ jobs:
           version: "0.96.1"
       - name: Build all packages
         run: |-
+          git config --global user.name 'Fake Name for Action'
+          git config --global user.email 'fake-name@for.action'
           ./build-missing.nu
           mkdir -p ghpage
           mv showcases ghpage
