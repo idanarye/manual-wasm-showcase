@@ -16,7 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     #if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # we need the showcase/ branches
       - uses: jetli/wasm-bindgen-action@v0.1.0
         with:
           version: 'latest'
