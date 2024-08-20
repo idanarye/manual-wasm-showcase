@@ -31,15 +31,17 @@ jobs:
       - name: Build all packages
         run: |-
           ./build-missing.nu
+          mkdir -p ghpage
+          mv showcases ghpage
       - name: Create index.html
-        run: ./format-index.nu > index.html
+        run: ./format-index.nu > ghpage/index.html
       - name: Add read permissions
         run: |-
-          chmod --recursive +r showcases
+          chmod --recursive +r ghpage
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: showcases
+          path: ghpage
   deploy-ghpages:
     environment:
       name: github-pages
