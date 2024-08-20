@@ -1,26 +1,31 @@
 #!/usr/bin/env nu
 
-let showcases = open showcases.yaml;
-let remote_branches = git branch --remote --format "%(refname:short)" | lines | str replace --regex '^origin/' '';
-let origin_url = git remote get-url origin;
-let demo_template = open -r demo-template.html;
-
 rm -rf showcases;
 git worktree prune;
 git fetch --prune;
-git fetch;
+
+git branch --format "%(refname:short)" | lines | filter {str starts-with "showcases/"} | each { |branch|
+    git branch -d $branch
+}
+
+let showcases = open showcases.yaml;
+let remote_branches = git branch --remote --format "%(refname:short)" | lines | str replace --regex '^(remotes/)?origin/' '';
+let origin_url = git remote get-url origin;
+let demo_template = open -r demo-template.html;
 
 $showcases | transpose name config | each { |showcase|
     let showcase_dir = "showcases" | path join $showcase.name
     let showcase_branch = $"showcases/($showcase.name)"
 
     if $showcase_branch in $remote_branches {
-        print $'No need to recreate ($showcase_branch)'
-        git worktree add -B $showcase_branch $showcase_dir
-        return
+        print $'No need to recreate ($showcase_branch)';
+        git worktree add $showcase_dir;
+        do {
+            cd $showcase_dir;
+            git checkout $"origin/($showcase_branch)"
+        }
+        return;
     }
-
-    # git init --initial-branch $showcase_branch $showcase_dir
 
     do {
         git worktree add -B $showcase_branch $showcase_dir
